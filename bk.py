@@ -31,10 +31,12 @@ class Brightkite(object):
         return content
 
     def _post(self, uri, content={}):
+        uri = self._unescape_uri(uri)
         header, content = self.http.request(uri, "POST", body=content)
         return content
 
     def _delete(self, uri):
+        uri = self._unescape_uri(uri)
         header, content = self.http.request(uri, "GET")
         return content
 
