@@ -173,17 +173,17 @@ class Brightkite(object):
         uri = "http://brightkite.com/me/commentsstream.xml"
         return self._convert_xml(self._get(quote(uri)))
 
-    def checkin(place_hash):
+    def checkin(self, place_hash):
         "Checkin at given specified position."
         uri = "http://brightkite.com/places/%s/checkins" % place_hash
         self._post(uri)
 
-    def delete_checkin(place_hash):
+    def delete_checkin(self, place_hash):
         "Delete a checkin at a position."
         uri = "http://brightkite.com/places/%s/checkins" % place_hash
         self._delete(uri)
         
-    def create_note(place, note_text):
+    def create_note(self, place, note_text):
         "Create a note with specified text."
         uri = "http://brightkite.com/places/%s/notes" % place_hash
         self.post(uri, note=note_text)
