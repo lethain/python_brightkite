@@ -15,6 +15,15 @@ from urllib import quote
 from xml2dict import XML2Dict
 from xml.parsers.expat import ExpatError
 
+class BrightkiteException(Exception):
+    def __init__(self, description, xml):
+        self.description = description
+        self.xml = xml
+
+    def __repr__(self):
+        return u"BrightkiteException(%s)" % self.description
+
+
 class Brightkite(object):
     def __init__(self, user, pw):
         self.user = user
@@ -28,7 +37,6 @@ class Brightkite(object):
     def _get(self, uri):
         "Fetch content via the GET method. Returns body of returned content."
         uri = self._unescape_uri(uri)
-        print uri
         header, content = self.http.request(uri, "GET")
         return content
 
@@ -47,7 +55,8 @@ class Brightkite(object):
         try:
             return self.xml.fromstring(xml)
         except ExpatError:
-            raise "Couldn't decode response from Brightkite"
+            msg = "Couldn't parse response from Brightkite API."
+            raise BrightkiteException(msg, xml)
 
     def _get_http(self):
         if self._http == None:
