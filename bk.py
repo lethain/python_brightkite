@@ -76,10 +76,8 @@ class Brightkite(object):
 
     def friends(self, username=None):
         "Fetch friends for specified user, or self if no user specified."
-        if username is None:
-            uri = "http://brightkite.com/me/friends.xml"
-        else:
-            uri = "http://brightkite.com/people/%s/friends.xml" % username
+        username = username or self.user
+        uri = "http://brightkite.com/people/%s/friends.xml" % username
         return self._convert_xml(self._get(quote(uri)))
 
     def pending_friends(self, username):
