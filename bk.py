@@ -156,9 +156,9 @@ class Brightkite(object):
         uri = "http://brightkite.com/me/sent_messages.xml"
         return self._convert_xml(self._get(quote(uri)))
 
-    def recieved_messages(self):
+    def received_messages(self):
         "Retrieve retrieved direct messages."
-        uri = "http://brightkite.com/me/recieved_messages.xml"
+        uri = "http://brightkite.com/me/received_messages.xml"
         return self._convert_xml(self._get(quote(uri)))
 
     def friendship(self, username):
