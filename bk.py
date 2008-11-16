@@ -128,6 +128,10 @@ class Brightkite(object):
     def notes_and_photos(self, username):
         uri  = "http://brightkite.com/people/%s/objects.xml?filters=notes,photos" % username
         return self._convert_xml(self._get(quote(uri)))
+        
+    def user_checkins(self, username):
+        uri = "http://brightkite.com/people/%s/objects.xml?filters=checkins" % username
+        return self._convert_xml(self._get(quote(uri)))        
 
     def placemarks(self, username=None, place_hash=None):
         """
