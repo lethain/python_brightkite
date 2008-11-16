@@ -47,7 +47,7 @@ class Brightkite(object):
 
     def _delete(self, uri):
         uri = self._unescape_uri(uri)
-        header, content = self.http.request(uri, "GET")
+        header, content = self.http.request(uri, "DELETE")
         return content
 
     def _convert_xml(self, xml):
