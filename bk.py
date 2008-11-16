@@ -13,6 +13,7 @@ is probably the simplest solution you'll find.
 import httplib2
 from urllib import quote
 from xml2dict import XML2Dict
+from xml.parsers.expat import ExpatError
 
 class Brightkite(object):
     def __init__(self, user, pw):
@@ -22,11 +23,12 @@ class Brightkite(object):
         self._http = None
 
     def _unescape_uri(self, uri):
-        return uri.replace("%3A",":")
+        return uri.replace("%3A",":").replace("%3F","?").replace("%26","&").replace("%3D","=")
 
     def _get(self, uri):
         "Fetch content via the GET method. Returns body of returned content."
         uri = self._unescape_uri(uri)
+        print uri
         header, content = self.http.request(uri, "GET")
         return content
 
@@ -42,7 +44,10 @@ class Brightkite(object):
 
     def _convert_xml(self, xml):
         "Stub method."
-        return self.xml.fromstring(xml)
+        try:
+            return self.xml.fromstring(xml)
+        except ExpatError:
+            raise "Couldn't decode response from Brightkite"
 
     def _get_http(self):
         if self._http == None:
