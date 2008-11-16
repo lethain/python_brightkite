@@ -21,9 +21,12 @@ class Brightkite(object):
         self._xml = None
         self._http = None
 
+    def _unescape_uri(self, uri):
+        return uri.replace("%3A",":")
 
     def _get(self, uri):
         "Fetch content via the GET method. Returns body of returned content."
+        uri = self._unescape_uri(uri)
         header, content = self.http.request(uri, "GET")
         return content
 
@@ -179,11 +182,11 @@ class Brightkite(object):
         "Delete a checkin at a position."
         uri = "http://brightkite.com/places/%s/checkins" % place_hash
         self._delete(uri)
-
+        
     def create_note(place, note_text):
         "Create a note with specified text."
         uri = "http://brightkite.com/places/%s/notes" % place_hash
-        self.post(uri, "note[body]"=note_text)
+        self.post(uri, note=note_text)
 
     """
     All apis specified up not, but not including Photos are implemented
